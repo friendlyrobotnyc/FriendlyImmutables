@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import friendlyrobot.nyc.friendlyimmutables.vo.GsonAdaptersStudent;
+import friendlyrobot.nyc.friendlyimmutables.vo.GsonAdaptersVo;
 
 @Module
 public class ApplicationModule {
@@ -19,7 +19,7 @@ public class ApplicationModule {
     @Singleton
     public Gson provideGson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(new GsonAdaptersStudent())
+                .registerTypeAdapterFactory(new GsonAdaptersVo())
                 .create();
     }
 }
