@@ -9,8 +9,12 @@ buildscript {
 
         classpath "com.neenbedankt.gradle.plugins:android-apt:1.6"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // Backport of some Java 8 language features such as Lambdas and method references.
+        classpath 'me.tatarka:gradle-retrolambda:3.2.4'
+
+        // Workaround for Lint + Retrolambda.
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+
     }
 }
 

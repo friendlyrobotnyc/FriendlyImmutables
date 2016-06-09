@@ -21,7 +21,7 @@ public class FriendlyApplication extends Application {
     @NonNull
     protected DaggerApplicationComponent.Builder prepareApplicationComponent() {
         return DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule());
+                .applicationModule(new ApplicationModule(this));
     }
 
     @NonNull

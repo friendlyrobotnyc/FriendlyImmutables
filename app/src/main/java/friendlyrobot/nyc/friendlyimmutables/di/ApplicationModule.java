@@ -1,5 +1,6 @@
 package friendlyrobot.nyc.friendlyimmutables.di;
 
+import android.app.Application;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -14,6 +15,19 @@ import friendlyrobot.nyc.friendlyimmutables.vo.GsonAdaptersVo;
 @Module
 public class ApplicationModule {
 
+    @NonNull
+    private final Application context;
+
+    public ApplicationModule(@NonNull Application context) {
+        this.context = context;
+    }
+
+    @Provides
+    @NonNull
+    public Application provideApplication() {
+        return context;
+    }
+
     @Provides
     @NonNull
     @Singleton
@@ -22,4 +36,5 @@ public class ApplicationModule {
                 .registerTypeAdapterFactory(new GsonAdaptersVo())
                 .create();
     }
+
 }

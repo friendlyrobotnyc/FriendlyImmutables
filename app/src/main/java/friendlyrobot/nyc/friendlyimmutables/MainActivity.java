@@ -4,22 +4,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.gson.Gson;
-
 import javax.inject.Inject;
 
-import friendlyrobot.nyc.friendlyimmutables.vo.Classroom;
-import friendlyrobot.nyc.friendlyimmutables.vo.ImmutableClassroom;
-import friendlyrobot.nyc.friendlyimmutables.vo.ImmutableSchool;
-import friendlyrobot.nyc.friendlyimmutables.vo.ImmutableStudent;
 import friendlyrobot.nyc.friendlyimmutables.vo.School;
-import friendlyrobot.nyc.friendlyimmutables.vo.Student;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
     @Inject
-    Gson gson;
+    MainPresenter mainPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +29,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void start() {
 
-        Student bob = ImmutableStudent.builder()
-                .name("bob").build();
-        Student heather = ImmutableStudent.builder()
-                .name("heather").build();
-        Classroom classroom = ImmutableClassroom.builder()
-                .id(2l).capacity(25).location("1st Floor").build();
+        mainPresenter.getSchoolObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(school -> school != null)
+                .subscribe(new Observer<School>() {
+                    @Override
+                    public void onCompleted() {}
 
+                    @Override
+                    public void onError(Throwable e) {}
 
-        School school = ImmutableSchool.builder().schoolName("Cass High")
-                .putClassroomsAndStudents(classroom.id(), heather, bob)
-                .addClassrooms(classroom)
-                .build();
+                    @Override
+                    public void onNext(School school) {
+                        Log.e("###","test");
+                    }
+                });
 
-        String literal = gson.toJson(school);
-        Log.e("#####","literal::" + literal);
     }
+
 
 }

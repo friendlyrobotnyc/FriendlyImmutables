@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: "android-apt"
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 23
@@ -18,6 +19,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -31,6 +37,9 @@ dependencies {
     apt "org.immutables:value:2.2.2" // <-- for annotation processor
     provided "org.immutables:value:2.2.2" // <-- for annotation API
     provided "org.immutables:gson:2.2.2" // <-- for annotation API
+
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.0'
 
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
 
